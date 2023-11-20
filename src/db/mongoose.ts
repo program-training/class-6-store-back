@@ -1,5 +1,6 @@
-import mongoose from "mongoose";
-import { Document, Schema, Model, SchemaTypes } from "mongoose";
+
+
+import mongoose, { Document, Schema, Model, SchemaTypes } from "mongoose";
 import {Product, Attributes} from '../endpoints/products/interface'
 
 const attributeSchema: Schema<Attributes> = new Schema<Attributes>({
@@ -29,27 +30,22 @@ export const connectToDatabase = async () => {
     throw error;
   }
 };
-// const url = process.env.MONGODB_URI;
 
-// export const connectToDatabase = async () => {
-//   try {
-//     if (!url) {
-//       throw new Error('MongoDB URL is not defined');
-//     }
-//     await mongoose.connect(url, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//       useCreateIndex: true,
-//       useFindAndModify: false,
-//     });
-//     console.log('Connected to MongoDB');
-//   } catch (error) {
-//     console.error('Error connecting to MongoDB:', error);
-//     throw error;
-//   }
-// };
 
 export const ProductModel: Model<Product> = mongoose.model<Product>(
   "Product",
   productSchema
 );
+
+
+
+export const connectToDatabase = async () => {
+  try {
+    await mongoose.connect('mongodb+srv://store_23:store_23@cluster0.kcamuno.mongodb.net/stores_db?retryWrites=true&w=majority');
+    console.log('Connected to MongoDB');
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    throw error;
+  }
+}
+
