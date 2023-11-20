@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { UserLogin } from "../interfaces/users";
+import { UserRegister } from "../interfaces/users";
 
-interface UserDocument extends UserLogin, Document {}
+interface UserDocument extends UserRegister, Document {}
 
-const UserLoginSchema = new mongoose.Schema<UserDocument>({
+const UserRegisterSchema = new mongoose.Schema<UserDocument>({
   firstName: {
     type: String,
     required: true,
@@ -26,16 +26,16 @@ const UserLoginSchema = new mongoose.Schema<UserDocument>({
   },
 });
 
-export const UserLoginModel = mongoose.model<UserDocument>("User", UserLoginSchema);
+export const UserRegisterModel = mongoose.model<UserDocument>("User", UserRegisterSchema);
 
-export const getUsers = () => UserLoginModel.find({});
-export const getUserByEmail = (email: string) => UserLoginModel.findOne({ email });
+export const getUsers = () => UserRegisterModel.find({});
+export const getUserByEmail = (email: string) => UserRegisterModel.findOne({ email });
 export const getUserByPassword = (password: string) =>
-  UserLoginModel.findOne({ password });
-export const getUserById = (id: string) => UserLoginModel.findById(id);
+  UserRegisterModel.findOne({ password });
+export const getUserById = (id: string) => UserRegisterModel.findById(id);
 export const createUser = (values: Record<string, any>) =>
-  new UserLoginModel(values).save().then((user) => user.toObject());
+  new UserRegisterModel(values).save().then((user) => user.toObject());
 export const deleteUserById = (id: string) =>
-  UserLoginModel.findOneAndDelete({ _id: id });
+  UserRegisterModel.findOneAndDelete({ _id: id });
 export const updateUserById = (id: string, values: Record<string, any>) =>
-  UserLoginModel.findByIdAndUpdate(id, values);
+  UserRegisterModel.findByIdAndUpdate(id, values);
