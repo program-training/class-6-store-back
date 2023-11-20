@@ -1,6 +1,21 @@
 import mongoose from "mongoose";
+import { UserLogin } from "../interfaces/users";
 
-const UserSchema = new mongoose.Schema({
+interface UserDocument extends UserLogin, Document {}
+
+const UserLoginSchema = new mongoose.Schema<UserDocument>({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -8,16 +23,19 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  }
+  },
 });
 
-export const UserModel = mongoose.model("User", UserSchema);
+export const UserLoginModel = mongoose.model<UserDocument>("User", UserLoginSchema);
 
-export const getUsers = () => UserModel.find({});
-export const getUserByEmail = (email: string) => UserModel.findOne({ email });
-export const getUserByPassword = (password: string) => UserModel.findOne({password})
-export const getUserById = (id: string) => UserModel.findById(id);
+export const getUsers = () => UserLoginModel.find({});
+export const getUserByEmail = (email: string) => UserLoginModel.findOne({ email });
+export const getUserByPassword = (password: string) =>
+  UserLoginModel.findOne({ password });
+export const getUserById = (id: string) => UserLoginModel.findById(id);
 export const createUser = (values: Record<string, any>) =>
-  new UserModel(values).save().then((user) => user.toObject());
-export const deleteUserById = (id:string)=> UserModel.findOneAndDelete({_id: id})
-export const updateUserById =(id: string, values: Record<string, any>)=> UserModel.findByIdAndUpdate(id, values)
+  new UserLoginModel(values).save().then((user) => user.toObject());
+export const deleteUserById = (id: string) =>
+  UserLoginModel.findOneAndDelete({ _id: id });
+export const updateUserById = (id: string, values: Record<string, any>) =>
+  UserLoginModel.findByIdAndUpdate(id, values);
