@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import usersServices from "./services";
+import { UserLogin } from "../../interfaces/users";
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
@@ -14,7 +15,17 @@ const getAllUsers = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
   try {
     const user = req.body;
-    const checkedUser = usersServices.login(user)
+    const userChecked = usersServices.login(user)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400).send(error);
+  }
+};
+
+const register = async (req: Request, res: Response) => {
+  try {
+    const user:UserLogin = req.body;
+    const userChecked = usersServices.register(user)
   } catch (error) {
     console.log(error);
     res.sendStatus(400).send(error);
@@ -23,5 +34,6 @@ const login = async (req: Request, res: Response) => {
 
 export default {
   getAllUsers,
-  login
+  login,
+  register
 };
