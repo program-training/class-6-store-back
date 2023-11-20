@@ -1,4 +1,4 @@
-import { ProductModel } from "../../db/mongoose";
+import { ProductModel } from "../../db/products";
 import { Product } from "./interface";
 
 const getAllProducts = async (query: Record<string, unknown>) => {
