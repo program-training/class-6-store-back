@@ -1,12 +1,13 @@
 import { CartModel } from '../../db/schemas'
-import { Cart } from "../../db/interfaces";
+import { Cart, UpdateQuantity, ProductToDelete, AddToCart } from "./interfaces";
 
 
-type CollectionResult = Promise<Cart | Error | null>;
+type CollectionResult = Promise<Cart | null | string>;
 
-const getAllProducts = async (userId: string): CollectionResult => {
+const getCart = async (userId: string): CollectionResult => {
   try {
-    const results:Cart = await CartModel.find({_id: userId});
+    const results:Cart |null = await CartModel.findById(userId);
+    if (!results) return 'No Cart found'
     const data:Cart = results.toObject();
     console.log('Data fetched successfully');
     return data;
@@ -16,87 +17,94 @@ const getAllProducts = async (userId: string): CollectionResult => {
   }
 };
 
+const updateQuantity = async (updateCart: UpdateQuantity): CollectionResult => {
+    try {
+        const cart = await CartModel.findOne({ userId: updateCart.userId });
 
-const getProductsByCategory = async (category: string): CollectionResult => {
+        if (!cart) return 'No Cart found';
+
+        const productToUpdate = cart.products.findIndex(
+            (product) => product.productId === updateCart.productId
+        );
+
+        if (productToUpdate === -1) {
+            return 'Product not found in cart';
+        }
+
+        if (updateCart.quantity > 0) {
+            cart.products[productToUpdate].quantity += updateCart.quantity;
+        } else if (updateCart.quantity < 0) {
+            cart.products[productToUpdate].quantity -= updateCart.quantity;
+            if (cart.products[productToUpdate].quantity === 0) {
+                cart.products.splice(productToUpdate, 1);
+            }
+        }
+
+        const updatedCart = await cart.save();
+
+        return updatedCart.toObject();
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+
+const addProduct = async (addToCart: AddToCart): CollectionResult => {
+    try {
+        let cart: Cart | null = await CartModel.findOne({ userId: addToCart.userId });
+
+        if (!cart) {
+            cart = new CartModel({ userId: addToCart.userId, products: addToCart.products });
+            await cart.save();
+            console.log('Created a new cart for user:', addToCart.userId);
+        } else {
+            cart.products = [...cart.products, ...addToCart.products];
+            await cart.save();
+            console.log('Products added successfully to the cart:', addToCart.products);
+        }
+
+        return cart;
+    } catch (error) {
+        console.error('Error adding products to cart:', error);
+        throw error;
+    }
+};
+
+const deleteCart = async (userId: string): CollectionResult => {
   try {
-    const results:Product[] = await ProductModel.find({category: category});
-    const data:Product[] = results.map((document) => document.toObject());
-    console.log('Data fetched successfully');
-    return data;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error; 
+    const cartToDelete = await CartModel.deleteOne({ userId: userId }); 
+    if (!cartToDelete) return 'no cart to delete';
+    return `The cart deleted successfully!`;
+    } catch (error) {
+        console.error('Error deleting the cart:', error);
+        throw error;
   }
 };
 
-
-const getTopCategory = async ():CollectionResult => {
+const deleteProductInCart = async (productToDelete: ProductToDelete): CollectionResult => {
   try {
-    const result:Product [] = await ProductModel.aggregate([
-      {
-        $group: {
-          _id: "$category",
-          clickCount: { $sum: "$count" }
-        }
-      },
-      {
-        $sort: { clickCount: -1 }
-      },
-      {
-        $limit: 3
-      },
-      {
-        $project: {
-          _id: 0,
-          category: "$_id",
-          clickCount: 1
-        }
-      }
-    ]);
-    console.log('result:', result);
-    console.log('Data fetched successfully');
-    return result;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error; 
-  }
-};
+    let cart: Cart | null = await CartModel.findOne({ userId: productToDelete.userId });
+    if (!cart) return 'The cart not found';
 
-interface updateQuantity {
-  productId: string,
-  quantity: number
-}
-
-const updateQuantity = async (product: updateQuantity): CollectionResult => {
-  try {
-    const { productId, quantity } = product;
-    const updatedProduct: Product | null = await ProductModel.findOneAndUpdate(
-      { _id: productId, quantity: { $gt: quantity } },  
-      { $set: { quantity: quantity } },
-      { new: true }
+    const indexOfProductToDelete = cart.products.findIndex(
+        (product) => product.productId === productToDelete.productId
     );
 
-    if (!updatedProduct) {
-      console.log('The product has not updated - the new quantity is greater than the existing quantity');
-      return null;
-    }
+    cart.products.splice(indexOfProductToDelete, 1)
+    return 'product deleted successfully'
 
-    console.log('product update successfully!');
-    return [updatedProduct.toObject()]; 
   } catch (error) {
-    console.error('Error updating the product:', error);
+    console.error('Error delete product:', error);
     throw error;
   }
 };
 
-
-
-const productDal = {
-  getAllProducts,
-  getProductsByCategory,
-  getTopCategory,
-  updateQuantity
+const cartDal = {
+    getCart,
+    updateQuantity,
+    addProduct,
+    deleteCart,
+    deleteProductInCart
 }
 
-
-export default productDal
+export default cartDal

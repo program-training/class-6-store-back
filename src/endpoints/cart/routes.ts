@@ -3,13 +3,14 @@ import cartController from "./controllers";
 
 const cartRoute = express.Router();
 
-cartRoute.get('/', cartController.getAllCart);
+cartRoute.get('/:userId', cartController.getCart);
 
 cartRoute.patch('/', cartController.updateQuantity);
 
 cartRoute.post('/:id', cartController.updateQuantity);
 
-cartRoute.delete('/', cartController.deleteAllCart);
+cartRoute.delete('/:userId', cartController.deleteCart);
+
 cartRoute.delete('/', cartController.deleteProductInCart);
 
 export default cartRoute
