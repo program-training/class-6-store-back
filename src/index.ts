@@ -1,6 +1,6 @@
 import express from 'express';
 import route from './routes';
-import { connectToDatabase } from './db/mongoos';
+import { connectToDatabase } from './db/mongoose';
 
 const app = express();
 
