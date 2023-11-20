@@ -28,6 +28,8 @@ const getProductById = async (req: Request, res: Response) => {
 const upsert = async (req: Request, res: Response) => {
   try {
     const body = req.body ? req.body : [];
+    console.log(req.body); 
+    
     const product = await productService.upsert(body);
     res.status(200).json(product);
   } catch (err) {

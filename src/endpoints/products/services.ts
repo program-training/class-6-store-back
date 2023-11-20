@@ -1,4 +1,5 @@
 import productsDal from "./dal";
+import { Product } from "./interface";
 
 const getAllProducts = async (query:Record<string, unknown>) => {
   try {
@@ -21,7 +22,7 @@ const getProductById = async (id: number) => {
   }
 };
 
-const upsert = async (body:any) => {
+const upsert = async (body:Product | Product[]) => {
     try {
       const product = await productsDal.upsert(body);
       if (!product) return "product not found";

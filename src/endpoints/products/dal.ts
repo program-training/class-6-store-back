@@ -34,12 +34,44 @@ const getProductById = async (id: number) => {
   }
 };
 
-const upsert = async (body: any) => {
+const upsert = async (body: Product | Product[]) => {
   try {
-    if(Array.isArray(body))
-    for(let i = 0; i < body.length; i++){
-        const result = await ProductModel.findOne({ id: body[i].id });
-        // .................
+    console.log('upsert');
+    console.log(body);
+    
+    if(Array.isArray(body)){
+        for(const item of body) {
+            // const result = await ProductModel.findOneAndUpdate({ id: item.id }, {quantity: item.quantity}, {new: true});
+            const result = await ProductModel.findOneAndUpdate({ id: item.id }, {$inc: {quantity: item.quantity}}, {new: true});
+            console.log('if');
+            console.log(result);
+            if(result === null) {
+                console.log('save1');
+                
+                const newProduct = new ProductModel(item);
+                console.log('save2');
+
+                newProduct.save((err)=>{
+                    if (err) {
+                        console.log('error');
+                        return 'boom';
+                    }
+                });
+                console.log('save3');
+
+            }
+        }
+    }else {
+        const result = await ProductModel.findOneAndUpdate({ id: body.id }, {$inc: {quantity: body.quantity}}, {new: true});
+        console.log('else');
+        
+        console.log(result);
+
+        // const result = await ProductModel.findOneAndUpdate({ id: body.id }, {quantity: body.quantity}, {new: true});
+        if(result === null) {
+            const newProduct = new ProductModel(body);
+            await newProduct.save();
+        }
     }
     return "cool";
   } catch (err) {
