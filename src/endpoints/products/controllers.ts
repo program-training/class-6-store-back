@@ -10,8 +10,8 @@ const getAllProducts = async (req: Request, res: Response) => {
     );
     res.status(200).json(products);
   } catch (error) {
-    throw error;
-    // res.status(500).json({ error: error.message });
+    error = error as string
+    res.status(500).json({ error: error});
   }
 };
 
@@ -20,8 +20,9 @@ const getProductById = async (req: Request, res: Response) => {
     const { id } = req.params;
     const product = await productService.getProductById(Number(id));
     res.status(200).json(product);
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    error = error as string
+    res.status(500).json({ error: error});
   }
 };
 
@@ -32,8 +33,9 @@ const upsert = async (req: Request, res: Response) => {
     
     const product = await productService.upsert(body);
     res.status(200).json(product);
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    error = error as string
+    res.status(500).json({ error: error});
   }
 };
 
