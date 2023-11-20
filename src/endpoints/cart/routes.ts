@@ -1,5 +1,15 @@
 import express from "express";
+import cartController from "./controllers";
 
-const cartRouter = express.Router();
+const cartRoute = express.Router();
 
-cartRouter.get('/')
+cartRoute.get('/', cartController.getAllCart);
+
+cartRoute.patch('/', cartController.updateQuantity);
+
+cartRoute.post('/:id', cartController.updateQuantity);
+
+cartRoute.delete('/', cartController.deleteAllCart);
+cartRoute.delete('/', cartController.deleteProductInCart);
+
+export default cartRoute

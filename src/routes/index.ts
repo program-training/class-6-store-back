@@ -1,15 +1,21 @@
 import express from "express"
 import usersRoute from "../endpoints/users/routes"
+
+import cartRoute from "../endpoints/cart/routes"
+
+
 import productsRouter from "../endpoints/products/routes"
-import { connectToDatabase } from "../db/mongoose"
-// require('dotenv').config();
+
+
 
 const route = express.Router()
 
 connectToDatabase()
 
 route.use("/users", usersRoute)
-// route.use("/cart", )
-route.use("/products", productsRouter)
+
+route.use("/cart", cartRoute)
+route.use("/products", )
+
 
 export default route

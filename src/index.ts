@@ -5,6 +5,8 @@ import { connectToDatabase } from './db/mongoose';
 const app = express();
 app.use(express.json());
 
+connectToDatabase()
+
 app.get('/', (req, res) => {
   res.send('Welcome!');
 });

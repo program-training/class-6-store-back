@@ -11,3 +11,4 @@ export const connectToDatabase = async () => {
     throw error;
   }
 };
+
