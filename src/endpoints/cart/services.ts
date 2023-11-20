@@ -1,62 +1,69 @@
 import cartDal from './dal'
+import { Cart, UpdateQuantity, ProductToDelete, AddToCart } from "./interfaces";
 
 
-const getAllCart = async (userId: string) => {
+type CollectionResult = Promise<Cart | null | string>;
+type Result = Cart | null | string;
+
+const getCart = async (userId: string):CollectionResult => {
     try {
-        const cart = await cartDal.getAllCart(userId);
+        const cart: Result = await cartDal.getCart(userId);
       if (!cart) return 'cart of this user not found' ;
       return cart;
     } catch (error) {
-      return error
+      throw error
     }
   };
-  
-  const updateQuantity = async () => {
-    
-    
+
+const updateQuantity = async (updateQuantity: UpdateQuantity): CollectionResult => {
     try {
-      
-      return 
-    } catch (error) {
-      return error
-    }
-  };
-  
-const addProduct = async (req: Request, res: Response) => {
-    try {
-      
-      return 
+      const cart: Result = await cartDal.updateQuantity(updateQuantity)
+      if (!cart) return 'cart of this user not found' ;
+
+      if (cart === 'Product not found in cart') return 'Product not in cart';
+        
+      return cart;
     } catch (error) {
       throw error
     }
   };
   
-  const deleteAllCart = async (req: Request, res: Response) => {
-    console.log(req.body);
-    
+const addProduct = async (product: AddToCart): CollectionResult => {
     try {
-      
-      return 
+        const cartToAdd: Result = await cartDal.addProduct(product);
+        if (!cartToAdd) return 'cart of this user not found' ;
+
+      return cartToAdd;
+    } catch (error) {
+      throw error
+    }
+  };
+  
+const deleteCart = async (userId: string) => {
+    try {
+      const cartToDelete = await cartDal.deleteCart(userId)
+      if (!cartToDelete) return 'cart of this user not found' ;
+      return cartToDelete
     } catch (error) {
       return error
     }
   };
   
-  const deleteProductInCart = async () => {
-    
-    
+  const deleteProductInCart = async (productToDelete: ProductToDelete) => {
     try {
-      
-      return 
+        const cartToDelete = await cartDal.deleteProductInCart(productToDelete)
+        if (!cartToDelete) return 'cart of this user not found' ;
+        
+      return cartToDelete
     } catch (error) {
       return error
     }
   };
   const cartService = {
-    getAllCart,
+    getCart,
     updateQuantity,
     addProduct,
-    deleteAllCart,
+    deleteCart,
     deleteProductInCart
   }
   

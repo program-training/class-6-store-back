@@ -28,23 +28,9 @@ interface Product {
     password: string
   }
   
-  interface ProductCart {
-    productId: string
-    quantity: number
-  }
-  
-  interface Cart {
-    toObject(): Cart;
-    userId:string,
-    product:ProductCart[]
-  }
-  
-
   export { 
     Product, 
     Attributes, 
     UsersInterface,
-    UserValid ,
-    Cart,
-    ProductCart
+    UserValid
   };
