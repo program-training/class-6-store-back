@@ -1,7 +1,10 @@
 import express from 'express';
 import route from './routes';
+import { connectToDatabase } from './db/mongoose';
 
 const app = express();
+
+connectToDatabase()
 
 app.get('/', (req, res) => {
   res.send('Welcome!');
