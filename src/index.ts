@@ -2,9 +2,17 @@ import express from 'express';
 import dotenv from "dotenv"
 
 import route from './routes';
-import { connectToDatabase } from './utils/mongoose';
+
+import { connectToDatabase } from './db/mongoose';
+import morgan from './utils/serverLogs/morgan'
+import cors from './utils/cors'
 
 const app = express();
+app.use(express.json());
+app.use(morgan)
+app.use(cors)
+
+
 
 app.use(express.json());
 dotenv.config()
