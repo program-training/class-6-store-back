@@ -1,9 +1,14 @@
 import express from 'express';
 import route from './routes';
 import { connectToDatabase } from './db/mongoose';
+import morgan from './utils/serverLogs/morgan'
+import cors from './utils/cors'
 
 const app = express();
 app.use(express.json());
+app.use(morgan)
+app.use(cors)
+
 
 connectToDatabase()
 
