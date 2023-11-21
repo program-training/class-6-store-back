@@ -7,6 +7,6 @@ productsRouter.get('/',productController.getAllProducts)
 
 productsRouter.get('/:id', productController.getProductById);
 
-productsRouter.post('/',productController.upsert)
+productsRouter.post('/',productController.updateOrInsert)
 
 export default productsRouter

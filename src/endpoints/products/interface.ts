@@ -2,16 +2,16 @@ export interface Product {
     [x: string]: any;
     id: number;
     title: string;
+    image:string;
     price: number;
     description: string;
     category: string;
-    attribute: Attributes[];
-    count: number;
+    clickCount:number;
     quantity: number;
+    attributes: Attributes[];
   }
   
   export interface Attributes {
-    Description: string;
-    Details: number | string;
+    key: string;
+    value: number | string;
   }
-  

@@ -2,8 +2,8 @@ import mongoose, { Schema, Model } from "mongoose";
 import { Product, Attributes } from "../endpoints/products/interface";
 
 const attributeSchema: Schema<Attributes> = new Schema<Attributes>({
-  Description: { type: String, required: true },
-  Details: { type: Schema.Types.Mixed, required: true },
+  key: { type: String, required: true },
+  value: { type: Schema.Types.Mixed, required: true },
 });
 
 const productSchema: Schema<Product> = new Schema<Product>({
@@ -12,8 +12,8 @@ const productSchema: Schema<Product> = new Schema<Product>({
   price: { type: Number, required: true },
   description: { type: String, required: true },
   category: { type: String, required: true },
-  attribute: { type: [attributeSchema], required: true },
-  count: { type: Number, required: true },
+  attributes: { type: [attributeSchema], required: true },
+  clickCount: { type: Number, required: true },
   quantity: { type: Number, required: true },
 });
 

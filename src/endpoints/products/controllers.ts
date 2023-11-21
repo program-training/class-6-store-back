@@ -26,12 +26,12 @@ const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-const upsert = async (req: Request, res: Response) => {
+const updateOrInsert = async (req: Request, res: Response) => {
   try {
     const body = req.body ? req.body : [];
     console.log(req.body); 
     
-    const product = await productService.upsert(body);
+    const product = await productService.updateOrInsert(body);
     res.status(200).json(product);
   } catch (error) {
     error = error as string
@@ -42,6 +42,6 @@ const upsert = async (req: Request, res: Response) => {
 const productController = {
   getAllProducts,
   getProductById,
-  upsert,
+  updateOrInsert,
 };
 export default productController;

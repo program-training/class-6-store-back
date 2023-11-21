@@ -3,9 +3,20 @@ import { Product } from "./interface";
 
 const getAllProducts = async (query:Record<string, unknown>) => {
   try {
-    const products = await productsDal.getAllProducts(query);
-    if (!products.length) return "products not found";
-    return products;
+    const result = await productsDal.getAllProducts();
+    let products: Product[] = [];
+    if (Object.keys(query).length) {
+      for (let key in query) {
+        if (result.length) {
+          products = result.filter((product: Product) => {
+            return product[key] == query[key];
+          });
+        }
+      }
+      return products;
+    }
+    if (!result.length) return "products not found";
+    return result;
   } catch (error) {
     throw error;
   }
@@ -22,9 +33,9 @@ const getProductById = async (id: number) => {
   }
 };
 
-const upsert = async (body:Product | Product[]) => {
+const updateOrInsert = async (body:Product | Product[]) => {
     try {
-      const product = await productsDal.upsert(body);
+      const product = await productsDal.updateOrInsert(body);
       if (!product) return "product not found";
       return product;
     } catch (error) {
@@ -36,7 +47,7 @@ const upsert = async (body:Product | Product[]) => {
 const productService = {
   getAllProducts,
   getProductById,
-  upsert,
+  updateOrInsert,
 };
 
 export default productService;
