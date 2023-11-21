@@ -1,6 +1,5 @@
-import { CartModel } from '../../db/schemas'
-import { Cart, UpdateQuantity, ProductToDelete, AddToCart } from "./interfaces";
-
+import { CartModel } from "../../db/schemas";
+import { Cart, UpdateQuantity, ProductToDelete, AddToCart } from "../../interfaces/cart";
 
 type CollectionResult = Promise<Cart | null | string>;
 
@@ -10,18 +9,21 @@ const findCart = async (userId: string) => {
 
 const getCart = async (userId: string): CollectionResult => {
   try {
+
     const cart = await findCart(userId);
     if (!cart) return 'No Cart found'
     const data:Cart = cart.toObject();
     console.log('Data fetched successfully');
+
     return data;
   } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error; 
+    console.error("Error fetching data:", error);
+    throw error;
   }
 };
 
 const updateQuantity = async (updateCart: UpdateQuantity): CollectionResult => {
+
     try {
         const cart = await findCart(updateCart.userId);
 
@@ -47,10 +49,11 @@ const updateQuantity = async (updateCart: UpdateQuantity): CollectionResult => {
     } catch (error) {
         console.error('Error fetching data:', error);
         throw error;
-    }
+  }
 };
 
 const addProduct = async (addToCart: AddToCart): CollectionResult => {
+
     try {
         let cart: Cart | null = await findCart(addToCart.userId);
 
@@ -68,44 +71,48 @@ const addProduct = async (addToCart: AddToCart): CollectionResult => {
     } catch (error) {
         console.error('Error adding products to cart:', error);
         throw error;
-    }
+
+  }
 };
 
 const deleteCart = async (userId: string): CollectionResult => {
   try {
-    const cartToDelete = await CartModel.deleteOne({ userId: userId }); 
-    if (!cartToDelete) return 'no cart to delete';
+    const cartToDelete = await CartModel.deleteOne({ userId: userId });
+    if (!cartToDelete) return "no cart to delete";
     return `The cart deleted successfully!`;
-    } catch (error) {
-        console.error('Error deleting the cart:', error);
-        throw error;
+  } catch (error) {
+    console.error("Error deleting the cart:", error);
+    throw error;
   }
 };
 
-const deleteProductInCart = async (productToDelete: ProductToDelete): CollectionResult => {
+const deleteProductInCart = async (
+  productToDelete: ProductToDelete
+): CollectionResult => {
   try {
+
     let cart: Cart | null = await findCart(productToDelete.userId);
     if (!cart) return 'The cart not found';
 
+
     const indexOfProductToDelete = cart.products.findIndex(
-        (product) => product.productId === productToDelete.productId
+      (product) => product.productId === productToDelete.productId
     );
 
-    cart.products.splice(indexOfProductToDelete, 1)
-    return 'product deleted successfully'
-
+    cart.products.splice(indexOfProductToDelete, 1);
+    return "product deleted successfully";
   } catch (error) {
-    console.error('Error delete product:', error);
+    console.error("Error delete product:", error);
     throw error;
   }
 };
 
 const cartDal = {
-    getCart,
-    updateQuantity,
-    addProduct,
-    deleteCart,
-    deleteProductInCart
-}
+  getCart,
+  updateQuantity,
+  addProduct,
+  deleteCart,
+  deleteProductInCart,
+};
 
-export default cartDal
+export default cartDal;

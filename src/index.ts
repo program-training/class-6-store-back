@@ -1,5 +1,8 @@
 import express from 'express';
+import dotenv from "dotenv"
+
 import route from './routes';
+
 import { connectToDatabase } from './db/mongoose';
 import morgan from './utils/serverLogs/morgan'
 import cors from './utils/cors'
@@ -10,13 +13,20 @@ app.use(morgan)
 app.use(cors)
 
 
-connectToDatabase()
+
+app.use(express.json());
+dotenv.config()
 
 app.get('/', (req, res) => {
   res.send('Welcome!');
 });
 
+
 app.use("/api", route)
+
+const PORT = process.env.PORT
+console.log(PORT);
+
 
 app.listen(3000, async() => {
   await connectToDatabase()
