@@ -1,5 +1,5 @@
 import cartDal from './dal'
-import { Cart, UpdateQuantity, ProductToDelete, AddToCart } from "./interfaces";
+import { Cart, UpdateQuantity, ProductToDelete, AddToCart } from "../../interfaces/cart";
 
 
 type CollectionResult = Promise<Cart | null | string>;

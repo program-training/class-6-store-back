@@ -1,5 +1,5 @@
 import { Schema, Model } from "mongoose";
-import { ProductCart, Cart } from '../endpoints/cart/interfaces';
+import { ProductCart, Cart } from '../interfaces/cart';
 
 import mongoose from "mongoose";
 

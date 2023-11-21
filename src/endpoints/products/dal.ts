@@ -1,9 +1,9 @@
 import { ProductModel } from "../../db/products";
-import { Product } from "./interface";
+import { Product } from "../../interfaces/products";
 
 const getAllProducts = async (query: Record<string, unknown>) => {
   try {
-    const result = await ProductModel.find();
+    const result = await ProductModel.find({});
     let products: Product[] = [];
     if (Object.keys(query).length > 0) {
       for (let key in query) {

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from "mongoose";
-import { Product, Attributes } from "../endpoints/products/interface";
+import { Product, Attributes } from "../interfaces/products";
 
 const attributeSchema: Schema<Attributes> = new Schema<Attributes>({
   Description: { type: String, required: true },
