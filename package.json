@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npm install && tsc",
     "clean": "rm -rf dist",
     "dev": "nodemon --legacy-watch src/index.ts",
     "start": "npm run build && node dist/index.js"
