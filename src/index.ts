@@ -1,17 +1,20 @@
 import express from 'express';
 import dotenv from "dotenv"
-
+import cors from "cors"
 import route from './routes';
+import morgan from "morgan"
 
 
-import morgan from './utils/serverLogs/morgan'
-import cors from './utils/cors'
+// import morgan from './utils/serverLogs/morgan'
+// import cors from './utils/cors'
 import { connectToDatabase } from './utils/mongoose';
 
 const app = express();
 app.use(express.json());
+app.use(cors({}))
+app.use(morgan('dev'))
 // app.use(morgan)
-app.use(cors)
+// app.use(cors)
 
 
 
