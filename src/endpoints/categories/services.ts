@@ -37,8 +37,30 @@ const setClick = async (id: string) => {
     }
   };
 
+  const createCategories = async (category: any) => {
+    try {
+        const categories = []
+        for (const name in category) {
+          categories.push({
+            name, 
+            image: category[name],
+            clicks: Math.floor(Math.random() * 100) + 1  
+          });
+        }
+      
+      const res = await CategoryModel.create(categories);
+      if (!res) {
+        return;
+      }
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 export default {
     getAllCategories,
     setClick,
-    createCategory
+    createCategory,
+    createCategories
 }
