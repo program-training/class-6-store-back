@@ -33,7 +33,7 @@ const PORT = process.env.PORT
 console.log(PORT);
 
 
-app.listen(3000, async() => {
+app.listen(PORT || 3000, async() => {
   await connectToDatabase()
   console.log('Server listening on port 3000');
 });
