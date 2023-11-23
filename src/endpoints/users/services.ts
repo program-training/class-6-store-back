@@ -28,7 +28,7 @@ const login = async (user: UserLogin) => {
 
     return { user: existingUser };
   } catch (error) {
-    throw new Error(error as string);
+    return error
   }
 };
 
@@ -53,7 +53,7 @@ const register = async (user: UserLogin) => {
 
     return { user: newUser };
   } catch (error) {
-    throw new Error(error as string);
+    return error
   }
 };
 
