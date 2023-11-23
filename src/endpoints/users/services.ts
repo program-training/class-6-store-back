@@ -3,8 +3,8 @@ import { UserLogin } from "../../interfaces/users";
 import { comparePassword, generateUserPassword } from "../../utils/bcrypt";
 import { registerSchema, loginSchema } from "../../utils/joy";
 
-const getAllUsers = () => {
-  console.log("success!");
+const getAllUsers = async() => {
+  return await UserRegisterModel.find({})
 };
 
 const login = async (user: UserLogin) => {
