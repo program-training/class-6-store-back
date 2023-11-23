@@ -4,7 +4,7 @@ import { UserLogin, UserRegister } from "../../interfaces/users";
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = usersServices.getAllUsers();
+    const users = await usersServices.getAllUsers();
     res.status(200).json(users);
   } catch (error) {
     console.log(error);
