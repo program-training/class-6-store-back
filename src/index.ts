@@ -13,17 +13,18 @@ const app = express();
 app.use(express.json());
 app.use(cors({}))
 app.use(morgan('dev'))
-// app.use(morgan)
-// app.use(cors)
-
-
-
 app.use(express.json());
 dotenv.config()
+
+
+
 
 app.get('/', (req, res) => {
   res.send('Welcome!');
 });
+
+const a = process.env.PORT
+console.log(a);
 
 
 app.use("/api", route)
