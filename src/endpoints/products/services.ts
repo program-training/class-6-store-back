@@ -1,7 +1,7 @@
 import productsDal from "./dal";
 import { Product } from "./interface";
 
-const getAllProducts = async (query:Record<string, unknown>) => {
+const getAllProducts = async (query: Record<string, unknown>) => {
   try {
     const result = await productsDal.getAllProducts();
     let products: Product[] = [];
@@ -22,7 +22,6 @@ const getAllProducts = async (query:Record<string, unknown>) => {
   }
 };
 
-
 const getProductById = async (id: number) => {
   try {
     const product = await productsDal.getProductById(id);
@@ -33,16 +32,15 @@ const getProductById = async (id: number) => {
   }
 };
 
-const updateOrInsert = async (body:Product | Product[]) => {
-    try {
-      const product = await productsDal.updateOrInsert(body);
-      if (!product) return "product not found";
-      return product;
-    } catch (error) {
-      throw error;
-    }
-  };
-  
+const updateOrInsert = async (body: Product | Product[]) => {
+  try {
+    const product = await productsDal.updateOrInsert(body);
+    if (!product) return "product not found";
+    return product;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const productService = {
   getAllProducts,

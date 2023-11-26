@@ -1,10 +1,39 @@
 import { ProductModel } from "../../db/products";
 import { Product } from "./interface";
+import axios from "axios";
+
+export const updateQuantity = async (result: Product[]) => {
+  for (const item of result) {
+    if (item.quantity < 20) {
+      try {
+        const res = await axios.post(
+          `https://erp-beak1-6.onrender.com/api/products/shop_inventory/updateInventory/${item.id}`,
+          {
+            operation: 20
+          }
+        );
+        if (res.data) {
+          const update = await ProductModel.findOneAndUpdate(
+            { id: item.id },
+            {
+              $inc: { quantity: 20 },
+            }
+          );
+          if (update) item.quantity += 20;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+  return result;
+};
 
 const getAllProducts = async () => {
   try {
     const result = await ProductModel.find();
-    return result;
+    const resultUpdated = updateQuantity(result);
+    return resultUpdated;
     // const products = results.map((document) => document.toObject());
     // return products;
   } catch (error) {
@@ -22,7 +51,6 @@ const getProductById = async (id: number) => {
     throw error;
   }
 };
-
 
 const updateOrInsert = async (body: Product | Product[]) => {
   try {

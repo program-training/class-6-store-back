@@ -33,7 +33,6 @@ const getProductById = async (req: Request, res: Response) => {
 const updateOrInsert = async (req: Request, res: Response) => {
   try {
     const body = req.body ? req.body : [];
-    console.log(req.body);
     const product = await productService.updateOrInsert(body);
     if (!product) {
       return res.status(500).send("Something went wrong!");
