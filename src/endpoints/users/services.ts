@@ -39,18 +39,18 @@ const register = async (user: UserLogin) => {
     const { error } = registerSchema.validate(user);
     if (error) {
       console.log(error.details[0].message);
-      return
+      return "error"
     }
 
     const exists = await UserRegisterModel.findOne({ email: user.email });
     if (exists) {
       console.log("User with this email already exists!");
-      return
+      return "error"
     }
 
     const hashedPassword = {...user, password: generateUserPassword(user.password)}
 
-    const newUser = await UserRegisterModel.create(hashedPassword);
+    const newUser = await UserRegisterModel.create(user);
 
     return { user: newUser };
   } catch (error) {

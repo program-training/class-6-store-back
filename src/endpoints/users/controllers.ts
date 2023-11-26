@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import usersServices from "./services";
 import { UserLogin, UserRegister } from "../../interfaces/users";
+import { generateToken } from "../../utils/token";
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
@@ -19,7 +20,16 @@ const login = async (req: Request, res: Response) => {
     if (!userChecked) {
       return res.sendStatus(500).send("Something went wrong!")
     }
+    if (typeof userChecked === "string") {
+      return res.status(300).send("some error")
+    }
     console.log("login successful");
+
+    // const response = {
+    //   user: userChecked,
+    //   token: generateToken(userChecked?._id)
+    // }
+
     res.status(200).json(userChecked);
   } catch (error) {
     console.log(error);
@@ -35,6 +45,9 @@ const register = async (req: Request, res: Response) => {
       return res.sendStatus(500).send('Something went wrong')
     }
     console.log("register successful");
+    if (typeof userChecked === "string") {
+      return res.status(300).send("some error")
+    }
     res.status(200).json(userChecked);
   } catch (error) {
     console.log(error);
