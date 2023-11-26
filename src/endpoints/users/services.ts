@@ -26,14 +26,14 @@ const login = async (user: UserLogin) => {
       return
     }
 
-    // if (!comparePassword(user.password, existingUser.password)) {
-    //   console.log("Incorrect password");
-    //   return
-    // }
-    if (user.password != existingUser.password) {
+    if (!comparePassword(user.password, existingUser.password)) {
       console.log("Incorrect password");
       return
     }
+    // if (user.password != existingUser.password) {
+    //   console.log("Incorrect password");
+    //   return
+    // }
 
     return { user: existingUser };
   } catch (error) {
@@ -60,7 +60,7 @@ const register = async (user: UserLogin) => {
 
     const hashedPassword = {...user, password: generateUserPassword(user.password)}
 
-    const newUser = await UserRegisterModel.create(user);
+    const newUser = await UserRegisterModel.create(hashedPassword);
 
     return { user: newUser };
   } catch (error) {
