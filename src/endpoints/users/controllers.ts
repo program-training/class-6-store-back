@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import usersServices from "./services";
-import { UserLogin, UserRegister } from "../../interfaces/users";
+import { UserChecked, UserLogin, UserRegister } from "../../interfaces/users";
 import { generateToken } from "../../utils/token";
 
 const getAllUsers = async (req: Request, res: Response) => {
@@ -16,7 +16,7 @@ const getAllUsers = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
   try {
     const user: UserLogin = req.body;
-    const userChecked = await usersServices.login(user);
+    let userChecked = await usersServices.login(user);
     if (!userChecked) {
       return res.sendStatus(500).send("Something went wrong!")
     }
@@ -25,10 +25,10 @@ const login = async (req: Request, res: Response) => {
     }
     console.log("login successful");
 
-    // const response = {
-    //   user: userChecked,
-    //   token: generateToken(userChecked?._id)
-    // }
+    userChecked = userChecked as unknown as UserChecked
+
+    // const token = generateToken(userChecked)
+    // userChecked.token = token
 
     res.status(200).json(userChecked);
   } catch (error) {

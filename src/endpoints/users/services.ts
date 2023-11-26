@@ -30,10 +30,6 @@ const login = async (user: UserLogin) => {
       console.log("Incorrect password");
       return
     }
-    // if (user.password != existingUser.password) {
-    //   console.log("Incorrect password");
-    //   return
-    // }
 
     return { user: existingUser };
   } catch (error) {
