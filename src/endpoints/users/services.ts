@@ -15,14 +15,22 @@ const login = async (user: UserLogin) => {
       console.log(error.details[0].message);
       return
     }
+    console.log(user);
+    
 
     const existingUser = await UserRegisterModel.findOne({ email: user.email });
+    console.log(existingUser);
+    
     if (!existingUser) {
       console.log("User with this email does not exist!");
       return
     }
 
-    if (!comparePassword(user.password, existingUser.password)) {
+    // if (!comparePassword(user.password, existingUser.password)) {
+    //   console.log("Incorrect password");
+    //   return
+    // }
+    if (user.password != existingUser.password) {
       console.log("Incorrect password");
       return
     }
@@ -36,11 +44,13 @@ const login = async (user: UserLogin) => {
 
 const register = async (user: UserLogin) => {
   try {
+    console.log(user);
     const { error } = registerSchema.validate(user);
     if (error) {
       console.log(error.details[0].message);
       return "error"
     }
+    
 
     const exists = await UserRegisterModel.findOne({ email: user.email });
     if (exists) {
