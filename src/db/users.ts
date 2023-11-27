@@ -26,10 +26,14 @@ const UserRegisterSchema = new mongoose.Schema<UserDocument>({
   },
 });
 
-export const UserRegisterModel = mongoose.model<UserDocument>("User", UserRegisterSchema);
+export const UserRegisterModel = mongoose.model<UserDocument>(
+  "User",
+  UserRegisterSchema
+);
 
 export const getUsers = () => UserRegisterModel.find({});
-export const getUserByEmail = (email: string) => UserRegisterModel.findOne({ email });
+export const getUserByEmail = (email: string) =>
+  UserRegisterModel.findOne({ email });
 export const getUserByPassword = (password: string) =>
   UserRegisterModel.findOne({ password });
 export const getUserById = (id: string) => UserRegisterModel.findById(id);

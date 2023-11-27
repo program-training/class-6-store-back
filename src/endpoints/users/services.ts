@@ -15,8 +15,12 @@ const login = async (user: UserLogin) => {
       console.log(error.details[0].message);
       return
     }
+    console.log(user);
+    
 
     const existingUser = await UserRegisterModel.findOne({ email: user.email });
+    console.log(existingUser);
+    
     if (!existingUser) {
       console.log("User with this email does not exist!");
       return
@@ -36,16 +40,18 @@ const login = async (user: UserLogin) => {
 
 const register = async (user: UserLogin) => {
   try {
+    console.log(user);
     const { error } = registerSchema.validate(user);
     if (error) {
       console.log(error.details[0].message);
-      return
+      return "error"
     }
+    
 
     const exists = await UserRegisterModel.findOne({ email: user.email });
     if (exists) {
       console.log("User with this email already exists!");
-      return
+      return "error"
     }
 
     const hashedPassword = {...user, password: generateUserPassword(user.password)}

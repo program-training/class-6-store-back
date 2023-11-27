@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import usersServices from "./services";
 import { UserLogin, UserRegister } from "../../interfaces/users";
+import { generateToken } from "../../utils/token";
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
@@ -15,12 +16,21 @@ const getAllUsers = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
   try {
     const user: UserLogin = req.body;
-    const userChecked = await usersServices.login(user);
+    let userChecked = await usersServices.login(user);
     if (!userChecked) {
-      return res.sendStatus(500).send("Something went wrong!")
+      return res.sendStatus(500).send("Something went wrong!");
+    }
+    if (typeof userChecked === "string") {
+      return res.status(300).send("some error");
     }
     console.log("login successful");
-    res.status(200).json(userChecked);
+
+    // const token = generateToken(user.email);
+    // userChecked = {
+    //   userChecked,
+    //   token: token,
+    // };
+    res.status(200).json({user: userChecked});
   } catch (error) {
     console.log(error);
     res.status(400).send(error as string);
@@ -29,12 +39,15 @@ const login = async (req: Request, res: Response) => {
 
 const register = async (req: Request, res: Response) => {
   try {
-    const user:UserRegister = req.body;  
-    const userChecked = await usersServices.register(user)
+    const user: UserRegister = req.body;
+    const userChecked = await usersServices.register(user);
     if (!userChecked) {
-      return res.sendStatus(500).send('Something went wrong')
+      return res.sendStatus(500).send("Something went wrong");
     }
     console.log("register successful");
+    if (typeof userChecked === "string") {
+      return res.status(300).send("some error");
+    }
     res.status(200).json(userChecked);
   } catch (error) {
     console.log(error);
@@ -45,5 +58,5 @@ const register = async (req: Request, res: Response) => {
 export default {
   getAllUsers,
   login,
-  register
+  register,
 };
