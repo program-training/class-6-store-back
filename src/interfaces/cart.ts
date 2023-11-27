@@ -1,50 +1,35 @@
-interface Product {
-    [x: string]: any;
-    id: number;
-    title: string;
-    price: number;
-    image: string;
-    description: string;
-    category: string;
-    attributes: Attributes[];
-    count: number;
+interface UpdateQuantity {
+    userId: string;
+    productId: string;
     quantity: number;
-  }
-  
-  interface Attributes {
-    key: string;
-    value: number | string;
-  }
-  
-  interface UsersInterface {
-    save(): unknown;
-    userName: string;
-    email: string;
-    password: string;
-  }
-  
-  interface UserValid {
-    email: string,
-    password: string
-  }
-  
-  interface ProductCart {
+}
+
+interface ProductToDelete {
+    userId: string;
+    productId: string;
+}
+
+interface AddToCart {
+    userId: string;
+    products: ProductCart[];
+}
+
+interface ProductCart {
     productId: string
     quantity: number
-  }
+}
   
-  interface Cart {
+interface Cart {
+    [x: string]: any;
     toObject(): Cart;
     userId:string,
-    product:ProductCart[]
-  }
-  
+    products:ProductCart[]
+}
 
-  export { 
-    Product, 
-    Attributes, 
-    UsersInterface,
-    UserValid ,
-    Cart,
-    ProductCart
-  };
+export {
+    UpdateQuantity,
+    ProductToDelete,
+    AddToCart,
+    ProductCart,
+    Cart
+}

@@ -1,5 +1,5 @@
 import productsDal from "./dal";
-import { Product } from "./interface";
+import { Product } from "../../interfaces/products";
 
 const getAllProducts = async (query: Record<string, unknown>) => {
   try {

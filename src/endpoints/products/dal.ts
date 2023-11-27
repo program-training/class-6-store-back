@@ -31,9 +31,8 @@ export const updateQuantity = async (result: Product[]) => {
 
 const getAllProducts = async () => {
   try {
-    const result = await ProductModel.find();
-    const resultUpdated = updateQuantity(result);
-    return resultUpdated;
+    const result = await ProductModel.find({});
+    return result;
     // const products = results.map((document) => document.toObject());
     // return products;
   } catch (error) {

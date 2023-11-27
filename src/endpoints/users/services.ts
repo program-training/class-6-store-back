@@ -3,8 +3,9 @@ import { UserLogin } from "../../interfaces/users";
 import { comparePassword, generateUserPassword } from "../../utils/bcrypt";
 import { registerSchema, loginSchema } from "../../utils/joy";
 
-const getAllUsers = () => {
-  console.log("success!");
+const getAllUsers = async() => {
+  const all = await UserRegisterModel.find()
+  return all
 };
 
 const login = async (user: UserLogin) => {
@@ -28,7 +29,7 @@ const login = async (user: UserLogin) => {
 
     return { user: existingUser };
   } catch (error) {
-    throw new Error(error as string);
+    return error
   }
 };
 
@@ -53,7 +54,7 @@ const register = async (user: UserLogin) => {
 
     return { user: newUser };
   } catch (error) {
-    throw new Error(error as string);
+    return error
   }
 };
 
