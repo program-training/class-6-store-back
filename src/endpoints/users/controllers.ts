@@ -25,12 +25,12 @@ const login = async (req: Request, res: Response) => {
     }
     console.log("login successful");
 
-    const token = generateToken(user.email);
-    userChecked = {
-      userChecked,
-      token: token,
-    };
-    res.status(200).json(userChecked);
+    // const token = generateToken(user.email);
+    // userChecked = {
+    //   userChecked,
+    //   token: token,
+    // };
+    res.status(200).json({user: userChecked});
   } catch (error) {
     console.log(error);
     res.status(400).send(error as string);
