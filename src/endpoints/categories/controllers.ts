@@ -37,7 +37,7 @@ const createCategory = async (req: Request, res: Response) => {
         const category = req.body
         const response = await categoriesServices.createCategory(category)
         if (!response) {
-            return res.status(401).json({ message: 'field to create!' })
+            return res.status(401).json({ message: 'failed to create!' })
         }
         res.status(200).json(response)
     } catch (error) {
@@ -52,7 +52,7 @@ const createCategories = async (req: Request, res: Response) => {
         const category = req.body
         const response = await categoriesServices.createCategories(category)
         if (!response) {
-            return res.status(401).json({ message: 'field to create!' })
+            return res.status(401).json({ message: 'failed to create!' })
         }
         res.status(200).json(response)
     } catch (error) {

@@ -1,16 +1,17 @@
 import express from "express";
 import cartController from "./controllers";
+import { authenticateToken } from "../../middlewares/jwt";
 
 const cartRoute = express.Router();
 
-cartRoute.get('/:userId', cartController.getCart);
+cartRoute.get('/:userId', authenticateToken, cartController.getCart);
 
-cartRoute.patch('/', cartController.updateQuantity);
+cartRoute.patch('/', authenticateToken, cartController.updateQuantity);
 
-cartRoute.post('/:id', cartController.addProduct);
+cartRoute.post('/:id', authenticateToken, cartController.addProduct);
 
-cartRoute.delete('/:userId', cartController.deleteCart);
+cartRoute.delete('/:userId', authenticateToken, cartController.deleteCart);
 
-cartRoute.delete('/', cartController.deleteProductInCart);
+cartRoute.delete('/', authenticateToken, cartController.deleteProductInCart);
 
 export default cartRoute

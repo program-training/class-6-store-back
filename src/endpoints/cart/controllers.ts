@@ -33,7 +33,7 @@ const updateQuantity = async (req: Request, res: Response) => {
     if (!cart) {
       return res.status(300).send({ massage: "cart of this user not found" });
     }
-    return res.status(200).send("quantity update successfully");
+    return res.status(200).send("quantity updated successfully");
   } catch (error) {
     return error;
   }
