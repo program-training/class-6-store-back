@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import usersServices from "./services";
 import { UserLogin, UserRegister } from "../../interfaces/users";
-import { generateToken } from "../../utils/token";
+// import { generateToken } from "../../utils/token";
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
@@ -30,7 +30,7 @@ const login = async (req: Request, res: Response) => {
     //   userChecked,
     //   token: token,
     // };
-    res.status(200).json({user: userChecked});
+    res.status(200).json(userChecked);
   } catch (error) {
     console.log(error);
     res.status(400).send(error as string);

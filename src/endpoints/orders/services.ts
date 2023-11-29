@@ -1,9 +1,12 @@
 import axios from "axios";
+import dotenv from "dotenv"
+
+const OMS_SERVER = process.env.OMS_SERVER
 
 const createOrder = async (order: any) => {
   try {
     const resp = await axios.post(
-      "https://demoosmserver.onrender.com/api/orders/",
+      `${OMS_SERVER}/api/orders/`,
       order
     );
     return resp.data;
@@ -15,7 +18,7 @@ const createOrder = async (order: any) => {
 const getUserOrders = async (userId: any) => {
     try {
       const resp = await axios.get(
-        `https://demoosmserver.onrender.com/api/orders/${userId}`,
+        `${OMS_SERVER}/api/orders/${userId}`,
       );
       return resp.data;
     } catch (error) {
