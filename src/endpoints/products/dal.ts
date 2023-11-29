@@ -1,5 +1,5 @@
 import { ProductModel } from "../../db/products";
-import { Product } from "./interface";
+import { Product } from "../../interfaces/products";
 import axios from "axios";
 
 export const updateQuantity = async (result: Product[]) => {
