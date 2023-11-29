@@ -55,8 +55,27 @@ const register = async (req: Request, res: Response) => {
   }
 };
 
+const edit = async (req: Request, res: Response) => {
+  try {
+    const users: UserRegister[] = req.body;
+    const changedUser = await usersServices.edit(users);
+    if (!changedUser) {
+      return res.sendStatus(500).send("Something went wrong");
+    }
+    console.log("changed successful");
+    if (typeof changedUser === "string") {
+      return res.status(300).send("some error");
+    }
+    res.status(200).json(changedUser);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(400).send(error);
+  }
+};
+
 export default {
   getAllUsers,
   login,
   register,
+  edit
 };
