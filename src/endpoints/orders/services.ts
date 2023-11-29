@@ -1,7 +1,9 @@
 import axios from "axios";
 import dotenv from "dotenv"
 
-const OMS_SERVER = process.env.OMS_SERVER
+dotenv.config()
+
+const OMS_SERVER = process.env.OMS_SERVER || "https://demoosmserver.onrender.com"
 
 const createOrder = async (order: any) => {
   try {

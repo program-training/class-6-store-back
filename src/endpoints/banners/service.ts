@@ -1,7 +1,9 @@
 import axios from "axios";
 import dotenv from "dotenv"
 
-const BANNERS_SERVER = process.env.BANNERS_SERVER
+dotenv.config()
+
+const BANNERS_SERVER = process.env.BANNERS_SERVER || "https://serverbanners.onrender.com"
 
 const getByCategory = async(category: string)=> {
  try {
