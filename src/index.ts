@@ -16,17 +16,6 @@ app.use(morgan('dev'))
 app.use(express.json());
 dotenv.config()
 
-
-
-
-app.get('/', (req, res) => {
-  res.send('Welcome!');
-});
-
-const a = process.env.PORT
-console.log(a);
-
-
 app.use("/", route)
 
 const PORT = process.env.PORT
