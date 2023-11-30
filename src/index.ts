@@ -27,7 +27,7 @@ const a = process.env.PORT
 console.log(a);
 
 
-app.use("/api", route)
+app.use("/store/api", route)
 
 const PORT = process.env.PORT
 console.log(PORT);

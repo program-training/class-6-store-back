@@ -7,7 +7,7 @@ export const updateQuantity = async (result: Product[]) => {
     if (item.quantity < 20) {
       try {
         const res = await axios.post(
-          `https://erp-beak1-6.onrender.com/api/products/shop_inventory/updateInventory/${item.id}`,
+          `https://erp-beak1-6.onrender.com/erp/api/products/shop_inventory/updateInventory/${item.id}`,
           {
             operation: 20
           }

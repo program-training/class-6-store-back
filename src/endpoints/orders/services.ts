@@ -8,7 +8,7 @@ const OMS_SERVER = process.env.OMS_SERVER || "https://demoosmserver.onrender.com
 const createOrder = async (order: any) => {
   try {
     const resp = await axios.post(
-      `${OMS_SERVER}/api/orders/`,
+      `${OMS_SERVER}/oms/api/orders/`,
       order
     );
     return resp.data;
@@ -20,7 +20,7 @@ const createOrder = async (order: any) => {
 const getUserOrders = async (userId: any) => {
     try {
       const resp = await axios.get(
-        `${OMS_SERVER}/api/orders/${userId}`,
+        `${OMS_SERVER}/oms/api/orders/${userId}`,
       );
       return resp.data;
     } catch (error) {

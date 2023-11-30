@@ -7,7 +7,7 @@ const BANNERS_SERVER = process.env.BANNERS_SERVER || "https://serverbanners.onre
 
 const getByCategory = async(category: string)=> {
  try {
-    const resp = await axios.get(`${BANNERS_SERVER}/api/banners/cat/${category}`)
+    const resp = await axios.get(`${BANNERS_SERVER}/banner/api/banners/cat/${category}`)
     return resp.data
  } catch (error) {
     console.log(error);  
@@ -16,7 +16,7 @@ const getByCategory = async(category: string)=> {
 
 const getAllBanners = async()=> {
     try {
-       const resp = await axios.get(`${BANNERS_SERVER}/api/banners/`)
+       const resp = await axios.get(`${BANNERS_SERVER}/banner/api/banners/`)
        return resp.data
     } catch (error) {
        console.log(error);
