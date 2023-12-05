@@ -2,12 +2,14 @@ import { ProductModel } from "../../db/products";
 import { Product } from "../../interfaces/products";
 import axios from "axios";
 
+const ERP_SERVER = process.env.ERP_SERVER || "https://erp-beak1-6.onrender.com"
+
 export const updateQuantity = async (result: Product[]) => {
   for (const item of result) {
     if (item.quantity < 20) {
       try {
         const res = await axios.post(
-          `https://erp-beak1-6.onrender.com/products/shop_inventory/updateInventory/${item.id}`,
+          `${ERP_SERVER}/products/shop_inventory/updateInventory/${item.id}`,
           {
             operation: 20
           }
