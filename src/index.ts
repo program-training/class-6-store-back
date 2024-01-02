@@ -1,26 +1,24 @@
-import express from 'express';
-import dotenv from "dotenv"
-import cors from "cors"
-import route from './routes';
-import morgan from "morgan"
-
+import express from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import route from './routes'
+import morgan from 'morgan'
 
 // import morgan from './utils/serverLogs/morgan'
 // import cors from './utils/cors'
-import { connectToDatabase } from './utils/mongoose';
+import { connectToDatabase } from './utils/mongoose'
 
-const app = express();
-app.use(express.json());
+const app = express()
+app.use(express.json())
 app.use(cors({}))
 app.use(morgan('dev'))
-app.use(express.json());
+app.use(express.json())
 dotenv.config()
 
-app.use("/", route)
+app.use('/', route)
 
-const PORT = process.env.PORT
-console.log(PORT);
-
+const PORT: string = process.env.PORT as unknown as string
+console.log(PORT)
 
 app.listen(PORT || 3000, async() => {
   await connectToDatabase()
