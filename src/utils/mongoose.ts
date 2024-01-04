@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const connectWithRetry = async (R_NUM = 10): Promise<void> => {
   const dbHost = process.env.DB_HOST ?? 'mongodb+srv://store_23:store_23@cluster0.kcamuno.mongodb.net/stores_db?retryWrites=true&w=majority'
-  console.log('connection nstring: ' + dbHost)
+
   let isConnect = false
   let retries = R_NUM
   while (!isConnect && retries > 0) {
@@ -22,6 +22,7 @@ const connectWithRetry = async (R_NUM = 10): Promise<void> => {
 }
 
 export const connectToDatabase = async (): Promise<void> => {
+    console.log('connection nstring: ' + process.env.DB_HOST)
   try {
     await connectWithRetry(10)
   } catch (error) {
